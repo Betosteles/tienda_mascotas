@@ -7,6 +7,7 @@ import 'package:tienda_mascotas/src/pages/login.dart';
 import 'package:tienda_mascotas/src/pages/tienda_filtrada.dart';
 
 import '../pages/carrito.dart';
+import '../pages/tienda.dart';
 import '../pages/tienda_categoria_animales_page.dart';
 import '../pages/tienda_categoria_producto.dart';
 import '../test/auth_test.dart';
@@ -20,6 +21,7 @@ enum MyRoutes {
   carrito,
   test2,
   test3,
+  tiendaNav,
   
 }
 
@@ -32,5 +34,6 @@ final routes = {
   MyRoutes.carrito.name: (context) =>  const CarritoPage(),
   MyRoutes.test2.name: (context) => AnimalScreen(),
   MyRoutes.test3.name: (context) => CategoriaScreen(),
+  MyRoutes.tiendaNav.name: (context) => NavTienda(),
   
 };

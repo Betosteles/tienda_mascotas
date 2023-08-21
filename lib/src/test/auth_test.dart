@@ -93,7 +93,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 child: const Text('Cerrar sesión'),
               ),
               ElevatedButton(onPressed: (){
-                Navigator.pushNamed(context, MyRoutes.test3.name);
+                Navigator.pushNamed(context, MyRoutes.tiendaNav.name);
               }
               , child: const Text("test")
               ),
