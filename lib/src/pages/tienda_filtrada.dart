@@ -1,55 +1,119 @@
 import 'package:flutter/material.dart';
+import 'package:tienda_mascotas/src/VariableControler/categoria_animales_controller.dart';
+import 'package:tienda_mascotas/src/VariableControler/categoria_producto_controller.dart';
 import 'package:tienda_mascotas/src/constantes/routes.dart';
-import '../VariableControler/amount_product_controller.dart';
+//import '../VariableControler/amount_product_controller.dart';
 import '../models/producto.dart';
 import '../providers/carrito_provider.dart';
 import '../providers/producto_provider.dart';
 import 'package:get/get.dart';
 import '../providers/usuarios_provider.dart';
+import '../widgets/snackbar_helper.dart';
 
 class TiendaPage extends StatelessWidget {
   const TiendaPage({super.key});
 
-
-  
-  
-
   @override
   Widget build(BuildContext context) {
     final productProvider = ProductoProvider();
-    
-    // final users = userProvider.getUsers();
-    // print(users);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tienda',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ) // Peso de fuente opcional
-            ),
-        backgroundColor: Colors.green[900],
-      ),
-       
+    final categoriaAnimales = Get.put<CategoriaAnimalesController>(CategoriaAnimalesController());
+    final categoriaProducto = Get.put<CategoriaProductosController>(CategoriaProductosController());
 
-      body: FutureBuilder(
-        future: productProvider.getProducts(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<Producto>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.none) {
-            return const Center(
-              child: Text('No hay conexion'),
-            );
-          }
-          if (snapshot.hasError) {}
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
+    if (categoriaAnimales.currentAnimalesCategory == 0 &&
+        categoriaProducto.currentProductosCategory == 0) {
+      return // MaterialApp(
+          //   routes: routes,
+          //   home:
+          Scaffold(
+        appBar: AppBar(
+          title: const Text('Tienda',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ) // Peso de fuente opcional
+              ),
+          backgroundColor: Colors.green[900],
+        ),
+        body: FutureBuilder(
+          future: productProvider.getProducts(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Producto>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.none) {
+              return const Center(
+                child: Text('No hay conexion'),
+              );
+            }
+            if (snapshot.hasError) {
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.error,
+                      size: 90,
+                    ),
+                    Text(snapshot.error.toString()),
+                  ],
+                ),
+              );
+            }
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-          return ListaProductos(snapshot: snapshot);
-        },
-      ),
-    );
+            return ListaProductos(snapshot: snapshot);
+          },
+        ),
+      );
+    } else {
+      return // MaterialApp(
+          //   routes: routes,
+          //   home:
+
+          Scaffold(
+        appBar: AppBar(
+          title: const Text('Tienda',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ) // Peso de fuente opcional
+              ),
+          backgroundColor: Colors.green[900],
+        ),
+        body: FutureBuilder(
+          future: productProvider.getProductoByAC(
+              animalId: categoriaAnimales.currentAnimalesCategory,
+              categoriaID: categoriaProducto.currentProductosCategory),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Producto>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.none) {
+              return const Center(
+                child: Text('No hay conexion'),
+              );
+            }
+            if (snapshot.hasError) {
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.error,
+                      size: 90,
+                    ),
+                    Text(snapshot.error.toString()),
+                  ],
+                ),
+              );
+            }
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return ListaProductos(snapshot: snapshot);
+          },
+        ),
+      );
+    }
   }
 }
 
@@ -75,17 +139,16 @@ class ListaProductos extends StatelessWidget {
 }
 
 class ItemProduct extends StatelessWidget {
- const ItemProduct({
+  const ItemProduct({
     super.key,
     required this.product,
   });
 
   final Producto product;
-  
 
   @override
   Widget build(BuildContext context) {
-    final cantidad = Get.put<AmountProductController>(AmountProductController(), tag: product.productoId.toString());
+    //final cantidad = Get.put<AmountProductController>(AmountProductController(), tag: product.productoId.toString());
     final userProvider = UsuariosProvider();
     final carritoProvider = CarritoService();
 
@@ -123,42 +186,48 @@ class ItemProduct extends StatelessWidget {
                       fontSize: 18,
                     ),
                   ),
-                  Row(
+                  const Row(
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.remove),
-                        onPressed: () {
-                          if (cantidad.currentAmount >0){
-                             cantidad.currentAmount -= 1;
-                          }
-                         
-                        },
-                      ),
-                      Obx(() => Text(cantidad.currentAmount.toString())),
-                      IconButton(
-                        icon: const Icon(Icons.add),
-                        onPressed: () {
-                          if (cantidad.currentAmount < product.stock){
-                             cantidad.currentAmount += 1;
-                          }
-                          
-                        },
-                      ),
+                      // IconButton(
+                      //   icon: const Icon(Icons.remove),
+                      //   onPressed: () {
+                      //     if (cantidad.currentAmount >0){
+                      //        cantidad.currentAmount -= 1;
+                      //     }
+
+                      //   },
+                      //),
+                      // Obx(() => Text(cantidad.currentAmount.toString())),
+                      // IconButton(
+                      //   icon: const Icon(Icons.add),
+                      //   onPressed: () {
+                      //     if (cantidad.currentAmount < product.stock){
+                      //        cantidad.currentAmount += 1;
+                      //     }
+
+                      //   },
+                      // ),
                     ],
                   ),
                   ElevatedButton(
-                    onPressed:  () async {
-                      String? uidUser =  userProvider.obtenerUIDUsuarioActivo();
-                 
-                      if(uidUser != null){
+                    onPressed: () async {
+                      String? uidUser = userProvider.obtenerUIDUsuarioActivo();
 
-                        carritoProvider.agregarProductoAlCarrito(uidUser, product.productoId, cantidad.currentAmount);
-
-                      }                      
-                      
+                      if (uidUser != null) {
+                        carritoProvider
+                            .incrementarCantidadProductoEnCarrito(
+                                uidUser, product.productoId.toString())
+                            .then((value) {
+                          SnackBarHelper.showSnackBar(context,
+                              'Producto añadido al carrito', SnackBarType.info,
+                              duration: const Duration(seconds: 1));
+                        });
+                      }
                     },
-                    child: const Text('Añadir al carrito',
-                    style: TextStyle(fontSize: 12),),
+                    child: const Text(
+                      'Añadir al carrito',
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ),
                 ],
               ),

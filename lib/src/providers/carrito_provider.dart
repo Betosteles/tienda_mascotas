@@ -1,4 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tienda_mascotas/src/models/carrito_model.dart';
+
+
+
 
 class CarritoService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -13,6 +18,7 @@ class CarritoService {
   }
 
   Future<void> eliminarProductoDelCarrito(String uid, String idProducto) async {
+    
     await _firestore
         .collection('usuarios')
         .doc(uid)
@@ -45,12 +51,19 @@ class CarritoService {
     });
   }
 
-  Future<Map<String, dynamic>> obtenerCarrito(String uid) async {
+  Future<Carrito> obtenerCarrito() async {
+
     Map<String, dynamic> carrito = {};
+
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null){
+      return Carrito(items: carrito);
+    }
 
     QuerySnapshot carritoSnapshot = await _firestore
         .collection('usuarios')
-        .doc(uid)
+        .doc(user.uid)
         .collection('carrito')
         .get();
 
@@ -64,6 +77,51 @@ class CarritoService {
       }
     }
 
-    return carrito;
+    return Carrito(items: carrito);
+  }
+
+Future<void> incrementarCantidadProductoEnCarrito(
+    String uid, String idProducto) async {
+  DocumentReference productoRef = _firestore
+      .collection('usuarios')
+      .doc(uid)
+      .collection('carrito')
+      .doc(idProducto);
+
+  DocumentSnapshot productoSnapshot = await productoRef.get();
+
+  if (productoSnapshot.exists) {
+    Map<String, dynamic>? data = productoSnapshot.data() as Map<String, dynamic>?;
+    if (data != null && data['cantidad'] != null) {
+      int cantidadActual = (data['cantidad'] as num).toInt();
+      await productoRef.update({
+        'cantidad': cantidadActual + 1,
+      });
+    }
+  } else {
+    await agregarProductoAlCarrito(uid, int.parse(idProducto), 1);
   }
 }
+
+ Future<int> obtenerCantidadProductoEnCarrito(String uid, String idProducto) async {
+    DocumentSnapshot productoSnapshot = await _firestore
+        .collection('usuarios')
+        .doc(uid)
+        .collection('carrito')
+        .doc(idProducto)
+        .get();
+
+    if (productoSnapshot.exists) {
+      Map<String, dynamic>? data = productoSnapshot.data() as Map<String, dynamic>?;
+      if (data != null && data['cantidad'] != null) {
+        return (data['cantidad'] as num).toInt();
+      }
+    }
+
+    return 0; // Si no se encuentra el producto en el carrito, se asume cantidad 0.
+  }
+
+
+}
+
+

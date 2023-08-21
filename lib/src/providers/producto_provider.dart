@@ -2,7 +2,6 @@ import '../models/producto.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 class ProductoProvider {
   // List getUsers() {
   //   // final url = Uri.parse('https://jsonplaceholder.typicode.com/users');
@@ -49,22 +48,22 @@ class ProductoProvider {
   Future<Producto> getProducto(int id) async {
     try {
       final url = Uri.parse('http://10.0.2.2/api/Producto/?id=$id');
-      
 
       final response = await http.get(url);
       final productoObjeto = productoFromJson(response.body);
 
-      
       return productoObjeto[0];
-      
     } catch (error) {
       throw Exception('Error al obtener los productos: $error');
     }
   }
 
-  Future<List<Producto>> getProductoByAC(int idA, int idC) async { //AnimalId y CategoriaID
+  Future<List<Producto>> getProductoByAC(
+      {required animalId, required int categoriaID}) async {
+    //AnimalId y CategoriaID
     try {
-      final url = Uri.parse('http://10.0.2.2/api/Producto/?idA=$idA&idC=$idC');
+      final url = Uri.parse(
+          'http://10.0.2.2/api/Producto/?idA=$animalId&idC=$categoriaID');
 
       final response = await http.get(url);
       return productoFromJson(response.body);
@@ -72,6 +71,4 @@ class ProductoProvider {
       throw Exception('Error al obtener los productos: $error');
     }
   }
-
-
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tienda_mascotas/src/constantes/routes.dart';
+import 'package:tienda_mascotas/src/providers/carrito_provider.dart';
 import 'package:tienda_mascotas/src/test/auth_test.dart';
 import 'firebase_options.dart';
 
@@ -13,11 +14,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final carritoProvider = CarritoService();
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +29,10 @@ class MyApp extends StatelessWidget {
       initialRoute: MyRoutes.test.name,
       routes: routes,
     );
-  }
+    
 }
+
+
 
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
@@ -47,3 +51,4 @@ class MyApp extends StatelessWidget {
 
 
 
+}
