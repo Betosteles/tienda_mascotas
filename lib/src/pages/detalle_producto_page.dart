@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tienda_mascotas/src/VariableControler/total_amount_cart.dart';
 
 import '../VariableControler/amount_product_controller.dart';
 import '../models/producto.dart';
@@ -18,9 +19,10 @@ class DetalleProducto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Producto;
+    final amountControler =  Get.find<AmountProductController>(tag: args.productoId.toString());
 
     return FutureBuilder(
-      future: carritoProvider.obtenerCantidadProductoEnCarrito(user!.uid, args.productoId.toString()),
+      future: carritoProvider.obtenerCantidadProductoEnCarrito(args.productoId.toString()),
       builder:(context, snapshot) {        
 
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -102,10 +104,14 @@ class DetalleProducto extends StatelessWidget {
                             if(cantidad.currentAmount!=0){
                               await carritoProvider.agregarProductoAlCarrito(user!.uid, args.productoId, cantidad.currentAmount).then((value){
                                 SnackBarHelper.showSnackBar(context, 'Producto Actualizado Correctamente', SnackBarType.info, duration: const Duration(seconds: 1));
+                                amountControler.currentAmount=cantidad.currentAmount;
+                                refreshAmount();
                               });
                             }else if(cantidad.currentAmount==0){
                               await carritoProvider.eliminarProductoDelCarrito(user!.uid, args.productoId.toString()).then((value){
                                 SnackBarHelper.showSnackBar(context, 'Producto Actualizado Correctamente', SnackBarType.info, duration: const Duration(seconds: 1));
+                                amountControler.currentAmount=cantidad.currentAmount;
+                                refreshAmount();
                               });
                             }
                             

@@ -3,6 +3,7 @@ import 'package:tienda_mascotas/src/VariableControler/categoria_animales_control
 import 'package:tienda_mascotas/src/VariableControler/categoria_producto_controller.dart';
 import 'package:tienda_mascotas/src/constantes/routes.dart';
 //import '../VariableControler/amount_product_controller.dart';
+import '../VariableControler/amount_product_controller.dart';
 import '../models/producto.dart';
 import '../providers/carrito_provider.dart';
 import '../providers/producto_provider.dart';
@@ -16,8 +17,10 @@ class TiendaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productProvider = ProductoProvider();
-    final categoriaAnimales = Get.put<CategoriaAnimalesController>(CategoriaAnimalesController());
-    final categoriaProducto = Get.put<CategoriaProductosController>(CategoriaProductosController());
+    final categoriaAnimales =
+        Get.put<CategoriaAnimalesController>(CategoriaAnimalesController());
+    final categoriaProducto =
+        Get.put<CategoriaProductosController>(CategoriaProductosController());
 
     if (categoriaAnimales.currentAnimalesCategory == 0 &&
         categoriaProducto.currentProductosCategory == 0) {
@@ -37,9 +40,7 @@ class TiendaPage extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.filter_list),
               onPressed: () {
-
                 Navigator.pushNamed(context, MyRoutes.animal.name);
-                
               },
             ),
           ],
@@ -82,22 +83,31 @@ class TiendaPage extends StatelessWidget {
 
           Scaffold(
         appBar: AppBar(
-          title: const Text('Tienda',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ) // Peso de fuente opcional
-              ),
-          backgroundColor: Colors.green[900],
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.filter_list),
-              onPressed: () {
+            title: const Text('Tienda',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ) // Peso de fuente opcional
+                ),
+            backgroundColor: Colors.green[900],
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.refresh),
+                onPressed: () {
+                  categoriaAnimales.currentAnimalesCategory = 0;
+                  categoriaProducto.currentProductosCategory = 0;
 
-                Navigator.pushNamed(context, MyRoutes.animal.name);
-                
-              },)]
-        ),
+                  Navigator.pushNamed(context, MyRoutes.tiendaNav.name);
+                  // Agrega aquí la lógica para recargar la página o realizar la acción deseada.
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.filter_list),
+                onPressed: () {
+                  Navigator.pushNamed(context, MyRoutes.animal.name);
+                },
+              )
+            ]),
         body: FutureBuilder(
           future: productProvider.getProductoByAC(
               animalId: categoriaAnimales.currentAnimalesCategory,
@@ -143,18 +153,13 @@ class ListaProductos extends StatelessWidget {
 
   final AsyncSnapshot<List<Producto>> snapshot;
 
-
   @override
   Widget build(BuildContext context) {
-    
-  if (snapshot.data!.isEmpty){
-
-    return const Center(
-      child: Text("No se encontraron Productos"),
-    );
-
-  }
-
+    if (snapshot.data!.isEmpty) {
+      return const Center(
+        child: Text("No se encontraron Productos"),
+      );
+    }
 
     return ListView.builder(
       itemCount: snapshot.data!.length,
@@ -168,102 +173,79 @@ class ListaProductos extends StatelessWidget {
 }
 
 class ItemProduct extends StatelessWidget {
-  const ItemProduct({
+ const ItemProduct({
     super.key,
     required this.product,
   });
 
   final Producto product;
+  
+
 
   @override
   Widget build(BuildContext context) {
-    //final cantidad = Get.put<AmountProductController>(AmountProductController(), tag: product.productoId.toString());
-    final userProvider = UsuariosProvider();
     final carritoProvider = CarritoService();
+    final amountControler = Get.put<AmountProductController>(AmountProductController(), tag: product.productoId.toString());
 
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, MyRoutes.detalleProducto.name,
-            arguments: product);
-      },
-      child: Card(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListTile(
-                title: Text(product.nombre),
-              ),
-            ),
-            Image.network(
-              product.imagenes,
-              height: 200,
-              fit: BoxFit.fitHeight,
-            ),
-            ListTile(
-              subtitle: Text(product.descripcion),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
+    return FutureBuilder<int>(
+      future: carritoProvider
+          .obtenerCantidadProductoEnCarrito(product.productoId.toString()),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return  const CircularProgressIndicator(); 
+        }
+
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        final cantidadEnCarrito = snapshot.data ?? 0;
+        amountControler.currentAmount = cantidadEnCarrito;
+
+        return GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, MyRoutes.detalleProducto.name,
+                arguments: product);
+          },
+          child: Card(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                      title:  Text(product.nombre),
+                      trailing: cantidadEnCarrito > 0
+                          ? Obx(() =>  Text(
+                              "(${amountControler.currentAmount.toString()})",
+                              style: const TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold, // Agrega negrita
+                                fontSize: 16,
+                              ),
+                            ))
+                          : const Text("") // Muestra la cantidad en el carrito
+                      )
+                ),
+                Image.network(
+                  product.imagenes,
+                  height: 200,
+                  fit: BoxFit.fitHeight,
+                ),
+                ListTile(
+                  title: Text(product.descripcion),
+                  trailing: Text(
                     '\$${product.precio}',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
-                  const Row(
-                    children: [
-                      // IconButton(
-                      //   icon: const Icon(Icons.remove),
-                      //   onPressed: () {
-                      //     if (cantidad.currentAmount >0){
-                      //        cantidad.currentAmount -= 1;
-                      //     }
-
-                      //   },
-                      //),
-                      // Obx(() => Text(cantidad.currentAmount.toString())),
-                      // IconButton(
-                      //   icon: const Icon(Icons.add),
-                      //   onPressed: () {
-                      //     if (cantidad.currentAmount < product.stock){
-                      //        cantidad.currentAmount += 1;
-                      //     }
-
-                      //   },
-                      // ),
-                    ],
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      String? uidUser = userProvider.obtenerUIDUsuarioActivo();
-
-                      if (uidUser != null) {
-                        carritoProvider
-                            .incrementarCantidadProductoEnCarrito(
-                                uidUser, product.productoId.toString())
-                            .then((value) {
-                          SnackBarHelper.showSnackBar(context,
-                              'Producto añadido al carrito', SnackBarType.info,
-                              duration: const Duration(seconds: 1));
-                        });
-                      }
-                    },
-                    child: const Text(
-                      'Añadir al carrito',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

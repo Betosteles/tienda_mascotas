@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:tienda_mascotas/src/models/carrito_model.dart';
 import 'package:tienda_mascotas/src/widgets/snackbar_helper.dart';
+import '../VariableControler/total_amount_cart.dart';
 import '../models/producto.dart';
 import '../providers/carrito_provider.dart';
 import '../providers/hacer_pedido_provider.dart';
@@ -137,6 +140,7 @@ class ItemProduct extends StatelessWidget {
   final VoidCallback refresh;
   final productoProvider = ProductoProvider();
   final User? user = FirebaseAuth.instance.currentUser;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +175,8 @@ class ItemProduct extends StatelessWidget {
                   onPressed: () async {
                     await carritoProvider.eliminarProductoDelCarrito(
                         user!.uid, datosProducto.productoId.toString());
-                    refresh(); // Llamar al método de actualización
+                    refresh();
+                    refreshAmount(); // Llamar al método de actualización
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(216, 255, 17, 0)),

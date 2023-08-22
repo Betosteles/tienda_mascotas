@@ -103,10 +103,18 @@ Future<void> incrementarCantidadProductoEnCarrito(
   }
 }
 
- Future<int> obtenerCantidadProductoEnCarrito(String uid, String idProducto) async {
+ Future<int> obtenerCantidadProductoEnCarrito(String idProducto) async {
+
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null){
+      return -1;
+    }
+
+
     DocumentSnapshot productoSnapshot = await _firestore
         .collection('usuarios')
-        .doc(uid)
+        .doc(user.uid)
         .collection('carrito')
         .doc(idProducto)
         .get();
@@ -120,6 +128,31 @@ Future<void> incrementarCantidadProductoEnCarrito(
 
     return 0; // Si no se encuentra el producto en el carrito, se asume cantidad 0.
   }
+
+  Future<int> obtenerSumaCantidadesEnCarrito() async {
+  int sumaTotal = 0;
+
+  User? user = FirebaseAuth.instance.currentUser;
+
+  if (user == null) {
+    return sumaTotal;
+  }
+
+  QuerySnapshot carritoSnapshot = await _firestore
+      .collection('usuarios')
+      .doc(user.uid)
+      .collection('carrito')
+      .get();
+
+  for (QueryDocumentSnapshot doc in carritoSnapshot.docs) {
+    dynamic data = doc.data();
+    if (data != null && data['cantidad'] != null) {
+      sumaTotal += (data['cantidad'] as num).toInt();
+    }
+  }
+
+  return sumaTotal;
+}
 
 
 }
