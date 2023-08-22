@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tienda_mascotas/src/constantes/routes.dart';
+import 'package:tienda_mascotas/src/pages/tienda_categoria_animales_page.dart';
+import 'package:tienda_mascotas/src/pages/tienda_categoria_producto.dart';
 import 'package:tienda_mascotas/src/pages/tienda_filtrada.dart';
 
 import '../VariableControler/tienda_page_controller.dart';
@@ -16,12 +19,15 @@ class NavTienda extends StatelessWidget {
         PageController(initialPage: tiendaController.currentIndex);
     return MaterialApp(
         title: 'Tienda',
+        routes: routes,
         home: Scaffold(
-            
             body: PageView(
               controller: pageController,
+              physics: const NeverScrollableScrollPhysics(), 
               onPageChanged: (value) async {
-                tiendaController.currentIndex = value;
+                
+                  tiendaController.currentIndex = value;
+                
               },
               children: [
                 const TiendaPage(),
@@ -37,10 +43,11 @@ class NavTienda extends StatelessWidget {
                 const CarritoPage()
               ],
             ),
-  
             bottomNavigationBar: Obx(
               () => BottomNavigationBar(
                 currentIndex: tiendaController.currentIndex,
+                 
+                
                 onTap: (index) async {
                   tiendaController.currentIndex = index;
 
@@ -48,6 +55,7 @@ class NavTienda extends StatelessWidget {
                     index,
                     duration: const Duration(milliseconds: 250),
                     curve: Curves.easeIn,
+                    
                   );
                 },
                 items: const [
@@ -66,7 +74,9 @@ class NavTienda extends StatelessWidget {
                     label: 'carrito',
                     tooltip: 'carrito',
                   ),
+                  
                 ],
+                
               ),
             )));
   }

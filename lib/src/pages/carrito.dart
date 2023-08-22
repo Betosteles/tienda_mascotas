@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tienda_mascotas/src/models/carrito_model.dart';
+import 'package:tienda_mascotas/src/widgets/snackbar_helper.dart';
 import '../models/producto.dart';
 import '../providers/carrito_provider.dart';
 import '../providers/hacer_pedido_provider.dart';
@@ -74,6 +75,8 @@ class CarritoPageState extends State<CarritoPage> {
                     if(valorSeleccionadoController.value!=null){
                       await hacerPedido.hacerPedido(int.parse(valorSeleccionadoController.value!));
                       await carritoProvider.borrarCarrito(user!.uid);
+                    }else{
+                      SnackBarHelper.showSnackBar(context, "Seleccione Metodo de Pago", SnackBarType.error);
                     }
 
                     _refresh();

@@ -19,8 +19,8 @@ enum MyRoutes {
   detalleProducto,
   test,
   carrito,
-  test2,
-  test3,
+  animal,
+  categoria,
   tiendaNav,
   
 }
@@ -32,8 +32,8 @@ final routes = {
   MyRoutes.detalleProducto.name: (context) =>  DetalleProducto(),
   MyRoutes.test.name: (context) =>  const AuthenticationScreen(),
   MyRoutes.carrito.name: (context) =>  const CarritoPage(),
-  MyRoutes.test2.name: (context) => AnimalScreen(),
-  MyRoutes.test3.name: (context) => CategoriaScreen(),
+  MyRoutes.animal.name: (context) => AnimalScreen(),
+  MyRoutes.categoria.name: (context) => CategoriaScreen(),
   MyRoutes.tiendaNav.name: (context) => NavTienda(),
   
 };

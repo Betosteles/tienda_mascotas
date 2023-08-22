@@ -33,6 +33,16 @@ class TiendaPage extends StatelessWidget {
               ) // Peso de fuente opcional
               ),
           backgroundColor: Colors.green[900],
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.filter_list),
+              onPressed: () {
+
+                Navigator.pushNamed(context, MyRoutes.animal.name);
+                
+              },
+            ),
+          ],
         ),
         body: FutureBuilder(
           future: productProvider.getProducts(),
@@ -79,6 +89,14 @@ class TiendaPage extends StatelessWidget {
               ) // Peso de fuente opcional
               ),
           backgroundColor: Colors.green[900],
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.filter_list),
+              onPressed: () {
+
+                Navigator.pushNamed(context, MyRoutes.animal.name);
+                
+              },)]
         ),
         body: FutureBuilder(
           future: productProvider.getProductoByAC(
@@ -125,8 +143,19 @@ class ListaProductos extends StatelessWidget {
 
   final AsyncSnapshot<List<Producto>> snapshot;
 
+
   @override
   Widget build(BuildContext context) {
+    
+  if (snapshot.data!.isEmpty){
+
+    return const Center(
+      child: Text("No se encontraron Productos"),
+    );
+
+  }
+
+
     return ListView.builder(
       itemCount: snapshot.data!.length,
       itemBuilder: (context, index) {
