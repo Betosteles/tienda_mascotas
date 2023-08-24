@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:tienda_mascotas/src/constantes/routes.dart';
-
+import 'package:tienda_mascotas/src/widgets/snackbar_helper.dart';
 
 class LoginPage extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -52,7 +52,15 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    
+    Map<String, String> errorCodeMessages = {
+      'invalid-email': 'Correo electrónico inválido',
+      'user-disabled': 'Usuario deshabilitado',
+      'user-not-found': 'Usuario no encontrado',
+      'wrong-password': 'Contraseña incorrecta',
+      'channel-error' : 'Ingrese los datos'
+      // Agrega más códigos de error y mensajes en español aquí
+    };
+
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -80,9 +88,6 @@ class _LoginFormState extends State<LoginForm> {
             onPressed: () async {
               final email = widget.emailController.text;
               final password = widget.passwordController.text;
-              
-              
-               
 
               try {
                 final userCredential =
@@ -90,18 +95,22 @@ class _LoginFormState extends State<LoginForm> {
                   email: email,
                   password: password,
                 );
-                
+
                 final user = userCredential.user;
                 if (user != null) {
                   Navigator.pushNamed(context, MyRoutes.tiendaNav.name);
                 }
               } catch (error) {
-                print('Error de inicio de sesión: $error');
-                if (error is FirebaseAuthException &&
-                    error.code == 'wrong-password') {
-                  setState(() {
-                    errorMessage = 'Contraseña incorrecta';
-                  });
+                
+                if (error is FirebaseAuthException) {
+    
+
+                   String errorCode = error.code;
+                   String errorMessage = errorCodeMessages[errorCode] ?? 'Error desconocido';
+
+
+                  SnackBarHelper.showSnackBar(
+                      context, errorMessage, SnackBarType.error);
                 }
               }
             },
@@ -109,9 +118,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 10.0),
           TextButton(
-            onPressed: () {
-             
-            },
+            onPressed: () {},
             child: const Text('Registrarme'),
           ),
           Text(
