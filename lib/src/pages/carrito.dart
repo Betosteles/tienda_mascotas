@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+// import 'package:get/get.dart';
+// import 'package:get/get_core/src/get_main.dart';
 import 'package:tienda_mascotas/src/models/carrito_model.dart';
 import 'package:tienda_mascotas/src/widgets/snackbar_helper.dart';
 import '../VariableControler/total_amount_cart.dart';
@@ -176,6 +176,7 @@ class ItemProduct extends StatelessWidget {
                     await carritoProvider.eliminarProductoDelCarrito(
                         user!.uid, datosProducto.productoId.toString());
                     refresh();
+
                     refreshAmount(); // Llamar al método de actualización
                   },
                   style:

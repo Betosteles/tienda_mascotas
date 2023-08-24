@@ -1,6 +1,6 @@
 import '../models/producto.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 
 class ProductoProvider {
   // List getUsers() {
@@ -39,7 +39,6 @@ class ProductoProvider {
       final url = Uri.parse('http://10.0.2.2/api/Producto/?id=0');
 
       final response = await http.get(url);
-      print(response.body);
       return productoFromJson(response.body);
     } catch (error) {
       throw Exception('Error al obtener los productos: $error');

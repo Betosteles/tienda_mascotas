@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tienda_mascotas/src/constantes/routes.dart';
+import 'package:tienda_mascotas/src/pages/perfil.dart';
 import 'package:tienda_mascotas/src/pages/tienda_filtrada.dart';
 
 import '../VariableControler/tienda_page_controller.dart';
@@ -31,18 +32,10 @@ class NavTienda extends StatelessWidget {
                   tiendaController.currentIndex = value;
                 
               },
-              children: [
-                const TiendaPage(),
-                Container(
-                  color: Colors.blue[100],
-                  child: const Center(
-                    child: Text(
-                      'Página 2',
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ),
-                ),
-                const CarritoPage()
+              children: const [
+                TiendaPage(),
+                PaginaPerfil(),
+                CarritoPage()
               ],
             ),
             bottomNavigationBar: Obx(

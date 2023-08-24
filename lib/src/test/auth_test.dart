@@ -99,9 +99,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               ),
     
               ElevatedButton(onPressed: (){
-                Navigator.pushNamed(context, MyRoutes.tienda.name);
+                Navigator.pushNamed(context, MyRoutes.admin.name);
               }
-              , child: const Text("Go Store")
+              , child: const Text("Pedidos")
               ),
               ElevatedButton(onPressed: () async {
                 Carrito carro = await carrito.obtenerCarrito();
@@ -115,7 +115,13 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               }
               , child: const Text("Carrito")
               ),
-              MetodoPagoDropdown(valorSeleccionadoController:valorSeleccionadoController),
+              ElevatedButton(onPressed: () async {
+      
+                Navigator.pushNamed(context, MyRoutes.perfil.name);
+              }
+              , child: const Text("perfil")
+              ),
+              
 
     
             ],

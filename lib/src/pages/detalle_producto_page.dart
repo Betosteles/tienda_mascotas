@@ -102,7 +102,7 @@ class DetalleProducto extends StatelessWidget {
                           onPressed: () async{
                             // Lógica para agregar al carrito
                             if(cantidad.currentAmount!=0){
-                              await carritoProvider.agregarProductoAlCarrito(user!.uid, args.productoId, cantidad.currentAmount).then((value){
+                              await carritoProvider.agregarProductoAlCarrito(user!.uid, args.productoId, cantidad.currentAmount, args.precio).then((value){
                                 SnackBarHelper.showSnackBar(context, 'Producto Actualizado Correctamente', SnackBarType.info, duration: const Duration(seconds: 1));
                                 amountControler.currentAmount=cantidad.currentAmount;
                                 refreshAmount();

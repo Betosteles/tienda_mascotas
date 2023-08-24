@@ -40,7 +40,7 @@ class CarritoService {
   }
 
   Future<void> agregarProductoAlCarrito(
-      String uid, int idProducto, int cantidad) async {
+      String uid, int idProducto, int cantidad, double precio) async {
     await _firestore
         .collection('usuarios')
         .doc(uid)
@@ -48,6 +48,7 @@ class CarritoService {
         .doc(idProducto.toString())
         .set({
       'cantidad': cantidad,
+      'precio' : precio
     });
   }
 
@@ -90,16 +91,22 @@ Future<void> incrementarCantidadProductoEnCarrito(
 
   DocumentSnapshot productoSnapshot = await productoRef.get();
 
+  Map<String, dynamic>? data = productoSnapshot.data() as Map<String, dynamic>?;
+
+  
+
   if (productoSnapshot.exists) {
-    Map<String, dynamic>? data = productoSnapshot.data() as Map<String, dynamic>?;
+    
     if (data != null && data['cantidad'] != null) {
       int cantidadActual = (data['cantidad'] as num).toInt();
+      double precioActual = (data['precio'] as num).toDouble();
       await productoRef.update({
         'cantidad': cantidadActual + 1,
+        'precio' : precioActual,
       });
     }
   } else {
-    await agregarProductoAlCarrito(uid, int.parse(idProducto), 1);
+    await agregarProductoAlCarrito(uid, int.parse(idProducto), 1, data?['precio']);
   }
 }
 
