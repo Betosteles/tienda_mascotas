@@ -162,6 +162,33 @@ Future<void> incrementarCantidadProductoEnCarrito(
 }
 
 
+
+  Future<double> calcularTotalFactura() async {
+    double total = 0.0;
+
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      return total;
+    }
+
+    QuerySnapshot carritoSnapshot = await _firestore
+        .collection('usuarios')
+        .doc(user.uid)
+        .collection('carrito')
+        .get();
+
+    for (QueryDocumentSnapshot doc in carritoSnapshot.docs) {
+      Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+      if (data != null && data['cantidad'] != null && data['precio'] != null) {
+        int cantidad = (data['cantidad'] as num).toInt();
+        double precio = (data['precio'] as num).toDouble();
+        total += cantidad * precio;
+      }
+    }
+
+    return total;
+  }
 }
 
 

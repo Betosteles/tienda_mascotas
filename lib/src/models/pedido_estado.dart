@@ -21,7 +21,7 @@ class PedidoEstado {
 
   factory PedidoEstado.fromJson(Map<String, dynamic> json) {
     return PedidoEstado(
-      idPedido: json['id_pedido'],
+      idPedido: json['pedido_id'],
       estadoId: json['estado_id'],
      
     );
@@ -29,7 +29,7 @@ class PedidoEstado {
 
   Map<String, dynamic> toJson() {
     return {
-      'id_pedido': idPedido,
+      'pedido_id': idPedido,
       'estado_id': estadoId,
      
     };

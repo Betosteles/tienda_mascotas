@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
 
 import '../providers/carrito_provider.dart';
+import '../widgets/snackbar_helper.dart';
 
 void refreshAmount() async{
     final carrito = CarritoService();
     final total = Get.find<TotalAmountProductController>();
     total.currentTotalAmount = await carrito.obtenerSumaCantidadesEnCarrito();
+
+    
   }
 
 class TotalAmountProductController extends GetxController {

@@ -4,6 +4,15 @@ import 'package:tienda_mascotas/src/models/usuario.dart';
 
 
 class UsuariosProvider {
+
+  Future<bool> verificarCorreoExistente(String email) async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('usuarios')
+        .where('correo', isEqualTo: email)
+        .get();
+
+    return querySnapshot.docs.isNotEmpty;
+  }
   
 
 Future<String> registrarUsuarioYCrearCarrito(

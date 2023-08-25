@@ -3,6 +3,7 @@ import 'package:tienda_mascotas/src/providers/pedido_provider.dart';
 
 import '../constantes/routes.dart';
 import '../models/pedido.dart';
+import '../providers/usuarios_provider.dart';
 
 class VerPedidosPage extends StatelessWidget {
   const VerPedidosPage({super.key});
@@ -12,6 +13,7 @@ class VerPedidosPage extends StatelessWidget {
   @override
 Widget build(BuildContext context) {
     final pedidoProvider = PedidoProvider();
+    final usuarioProvide = UsuariosProvider();
 
     return MaterialApp(
       title: 'Admin',
@@ -19,6 +21,17 @@ Widget build(BuildContext context) {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Administrar Pedidos'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.exit_to_app),
+              onPressed: () {
+                usuarioProvide.cerrarSesion();
+                                Navigator.pushNamed(
+                                    context, MyRoutes.login.name);
+              },
+            ),
+          ],
+
         ),
         body: FutureBuilder<List<Pedido>>(
           future: pedidoProvider.getPedidosDesc(),

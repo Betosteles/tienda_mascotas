@@ -60,4 +60,27 @@ class PedidoProvider {
     
 
   }
+
+  Future<List<Pedido>> getPedidosPorCliente() async {
+    try {
+      final url = Uri.parse('http://10.0.2.2/api/Pedido/?cliente_id=${user?.uid}');
+      final response = await http.get(url);
+      return pedidoFromJson(response.body);
+    } catch (error) {
+      throw Exception('$error');
+    }
+  }
+
+
+  Future<List<Pedido>> getPedidosPorCliente2() async {
+    try {
+      final url = Uri.parse('http://10.0.2.2/api/Pedido/?cliente_id=${user?.uid}&completado');
+      final response = await http.get(url);
+      return pedidoFromJson(response.body);
+    } catch (error) {
+      throw Exception('$error');
+    }
+  }
+
+
 }

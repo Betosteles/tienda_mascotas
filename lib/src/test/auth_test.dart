@@ -5,6 +5,7 @@ import 'package:tienda_mascotas/src/constantes/routes.dart';
 
 import '../models/carrito_model.dart';
 import '../providers/carrito_provider.dart';
+import '../widgets/dropdown_button_estado_pedido.dart';
 import '../widgets/dropdown_button_metodo_pago.dart';
 
 class AuthenticationScreen extends StatefulWidget {
@@ -101,7 +102,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               ElevatedButton(onPressed: (){
                 Navigator.pushNamed(context, MyRoutes.admin.name);
               }
-              , child: const Text("Pedidos")
+              , child: const Text("admin")
               ),
               ElevatedButton(onPressed: () async {
                 Carrito carro = await carrito.obtenerCarrito();
@@ -121,6 +122,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               }
               , child: const Text("perfil")
               ),
+              EstadoPedidoDropdown(valorSeleccionadoController: valorSeleccionadoController, pedidoId: 26),
+              ElevatedButton(onPressed: ()  {
+      
+                print(valorSeleccionadoController.value);
+              }
+              , child: const Text("Valor")
+              ),
+
               
 
     

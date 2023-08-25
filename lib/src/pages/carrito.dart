@@ -10,6 +10,7 @@ import '../providers/carrito_provider.dart';
 import '../providers/hacer_pedido_provider.dart';
 import '../providers/producto_provider.dart';
 import '../widgets/dropdown_button_metodo_pago.dart';
+import '../widgets/test_total_factura.dart';
 
 class CarritoPage extends StatefulWidget {
   const CarritoPage({super.key});
@@ -67,9 +68,11 @@ class CarritoPageState extends State<CarritoPage> {
           }
           return Column(
             children: [
+              
               Expanded(
                 child: ListaProductos(snapshot: snapshot, refresh: _refresh),
               ),
+              TotalCarritoWidget(),
               MetodoPagoDropdown(valorSeleccionadoController: valorSeleccionadoController,),
               if (snapshot.data!.items.isNotEmpty)
                 ElevatedButton(
@@ -78,6 +81,15 @@ class CarritoPageState extends State<CarritoPage> {
                     if(valorSeleccionadoController.value!=null){
                       await hacerPedido.hacerPedido(int.parse(valorSeleccionadoController.value!));
                       await carritoProvider.borrarCarrito(user!.uid);
+
+                      _refresh();
+
+                    refreshAmount(); 
+
+                    // ignore: use_build_context_synchronously
+                    SnackBarHelper.showSnackBar(context, "Pedido Enviado!", SnackBarType.info);
+
+                      
                     }else{
                       SnackBarHelper.showSnackBar(context, "Seleccione Metodo de Pago", SnackBarType.error);
                     }
@@ -97,6 +109,7 @@ class CarritoPageState extends State<CarritoPage> {
     setState(() {
       carritoFuture = carritoProvider.obtenerCarrito();
     });
+    
   }
 }
 
@@ -175,6 +188,7 @@ class ItemProduct extends StatelessWidget {
                   onPressed: () async {
                     await carritoProvider.eliminarProductoDelCarrito(
                         user!.uid, datosProducto.productoId.toString());
+
                     refresh();
 
                     refreshAmount(); // Llamar al método de actualización

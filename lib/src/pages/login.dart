@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tienda_mascotas/src/constantes/routes.dart';
@@ -15,7 +16,7 @@ class LoginPage extends StatelessWidget {
     return MaterialApp(
       routes: routes,
       theme: ThemeData(
-        primarySwatch: Colors.green, // Cambia el color temático principal
+        primarySwatch: Colors.green,
       ),
       home: Scaffold(
         appBar: AppBar(title: const Text('Vet Shop')),
@@ -48,7 +49,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  String errorMessage = ''; // Agrega esta variable de estado
+  String errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +58,7 @@ class _LoginFormState extends State<LoginForm> {
       'user-disabled': 'Usuario deshabilitado',
       'user-not-found': 'Usuario no encontrado',
       'wrong-password': 'Contraseña incorrecta',
-      'channel-error' : 'Ingrese los datos'
-      // Agrega más códigos de error y mensajes en español aquí
+      'channel-error': 'Ingrese los datos'
     };
 
     return Padding(
@@ -98,17 +98,38 @@ class _LoginFormState extends State<LoginForm> {
 
                 final user = userCredential.user;
                 if (user != null) {
-                  Navigator.pushNamed(context, MyRoutes.tiendaNav.name);
+                  // Obtener el campo 'tipoUsuario' del usuario desde Firestore
+                  String uid = user.uid;
+                  DocumentSnapshot userSnapshot = await FirebaseFirestore
+                      .instance
+                      .collection('usuarios')
+                      .doc(uid)
+                      .get();
+
+                  if (userSnapshot.exists) {
+                    Map<String, dynamic> userData =
+                        userSnapshot.data() as Map<String, dynamic>;
+                    String userType = userData['tipoUsuario'];
+
+                    if (userType == 'User') {
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushNamed(context, MyRoutes.tiendaNav.name);
+                    } else if (userType == 'Admin') {
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushNamed(context, MyRoutes.admin.name);
+                    } else {
+                      // Si el tipo de usuario no es reconocido, manejarlo de acuerdo a tus necesidades
+                    }
+                  }
                 }
               } catch (error) {
-                
                 if (error is FirebaseAuthException) {
-    
-
-                   String errorCode = error.code;
-                   String errorMessage = errorCodeMessages[errorCode] ?? 'Error desconocido';
-
-
+                  String errorCode = error.code;
+                  String errorMessage =
+                      errorCodeMessages[errorCode] ?? 'Error desconocido';
+                  setState(() {
+                    this.errorMessage = errorMessage;
+                  });
                   SnackBarHelper.showSnackBar(
                       context, errorMessage, SnackBarType.error);
                 }
@@ -118,7 +139,9 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 10.0),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, MyRoutes.registrarUser.name);
+            },
             child: const Text('Registrarme'),
           ),
           Text(
