@@ -1,16 +1,12 @@
-# tienda_mascotas
 
-A new Flutter project.
 
-## Getting Started
+Versión de PHP Utilizada para el Proyecto: 8.2.4 
 
-This project is a starting point for a Flutter application.
+Versión Sql Utilizada para el Proyecto 8.0.34
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+La carpeta tienda y api se deben colocar dentro de la carpeta "C:\xampp\htdocs"
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Modificar el archivo "C:\xampp\htdocs\api\config\database.php" para modificar el usuario y contraseña en caso de ser necesario.
+
+
