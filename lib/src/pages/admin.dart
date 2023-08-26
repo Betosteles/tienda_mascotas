@@ -4,6 +4,7 @@ import 'package:tienda_mascotas/src/providers/pedido_provider.dart';
 import '../constantes/routes.dart';
 import '../models/pedido.dart';
 import '../providers/usuarios_provider.dart';
+import '../widgets/estado_pedido_icon.dart';
 
 class VerPedidosPage extends StatelessWidget {
   const VerPedidosPage({super.key});
@@ -64,7 +65,7 @@ Widget build(BuildContext context) {
                           ListTile(
                             title: Text('Fecha: ${detalle.fechaPedido}'),
                             subtitle: Text('Pedido: ${detalle.idPedido},    Metodo De pago: ${detalle.metodoPagoId == 1 ? "Transferencia Bancaria" : detalle.metodoPagoId == 2 ? "Contra Entrega" : "Otro Metodo De pago"}'),
-                            //trailing:const Icon(Icons.remove_red_eye),
+                            trailing: IconEstadoPedido(pedidoId: detalle.idPedido,),
                             isThreeLine: true,
                           ),
                           const Divider(height: 0, thickness: 5, color: Colors.black,),

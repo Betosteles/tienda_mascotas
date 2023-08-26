@@ -4,6 +4,8 @@ import 'package:tienda_mascotas/src/providers/pedido_provider.dart';
 
 import '../constantes/routes.dart';
 import '../models/pedido.dart';
+import '../widgets/list_tile_pedido_detalle_usuario.dart';
+import '../widgets/list_tile_pedido_estado_usuario.dart';
 
 class VerPedidosPasadosPage extends StatelessWidget {
   const VerPedidosPasadosPage({super.key});
@@ -37,28 +39,15 @@ Widget build(BuildContext context) {
                   itemCount: snapshot.data?.length,
                   itemBuilder: (context, index) {
                     Pedido detalle = snapshot.data![index];
-                    return GestureDetector(
-        
-                      onTap: () {
-        
-                        
-                         
-                      },
-        
-                      child: SizedBox(
-                        child: Column(
-                          children: [
-                            ListTile(
-                              title: Text('Fecha: ${detalle.fechaPedido}'),
-                              subtitle: Text('Pedido: ${detalle.idPedido},    Metodo De pago: ${detalle.metodoPagoId == 1 ? "Transferencia Bancaria" : detalle.metodoPagoId == 2 ? "Contra Entrega" : "Otro Metodo De pago"}'),
-                              //trailing:const Icon(Icons.remove_red_eye),
-                              isThreeLine: true,
-                            ),
-                            const Divider(height: 0, thickness: 5, color: Colors.black,),
-                          ],
-                        ),
-                        
+                    return SizedBox(
+                      child: Column(
+                        children: [
+                          
+                          ListTilePedidoEstadoUsuario(pedidoDetalle: detalle),
+                          const Divider(height: 0, thickness: 5, color: Colors.black,),
+                        ],
                       ),
+                      
                     );
                   },
                 );

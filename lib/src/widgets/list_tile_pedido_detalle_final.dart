@@ -27,6 +27,7 @@ class ListTilePedidoDetalleFinal extends StatelessWidget {
             ),
             title: Text(productoDetalle.nombre),
             subtitle: Text(productoDetalle.descripcion ),
+            trailing: Text("X${pedidoDetalle.cantidadProducto}"),
             
           );
   }

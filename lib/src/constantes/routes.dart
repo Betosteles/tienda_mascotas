@@ -9,6 +9,7 @@ import 'package:tienda_mascotas/src/pages/tienda_filtrada.dart';
 
 import '../pages/administrar_pedidos.dart';
 import '../pages/carrito.dart';
+import '../pages/cliente_pedidos_detalle.dart';
 import '../pages/cliente_pedidos_pasados.dart';
 import '../pages/cliente_pedidos_pendientes.dart';
 import '../pages/perfil.dart';
@@ -34,7 +35,8 @@ enum MyRoutes {
   perfilCambios,
   registrarUser,
   pedidosPendientes,
-  pedidosPasados
+  pedidosPasados,
+  clientePedidos,
 
   
 }
@@ -55,5 +57,6 @@ final routes = {
   MyRoutes.registrarUser.name: (context) => RegisterScreen(),
   MyRoutes.pedidosPendientes.name: (context) => const VerPedidosPendientesPage(),
   MyRoutes.pedidosPasados.name: (context) => const VerPedidosPasadosPage(),
+  MyRoutes.clientePedidos.name: (context) => const ClientesPedidosDetallePage(),
   
 };

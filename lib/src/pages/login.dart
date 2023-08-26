@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:tienda_mascotas/src/constantes/routes.dart';
 import 'package:tienda_mascotas/src/widgets/snackbar_helper.dart';
 
+import '../providers/auth_helper.dart';
+
 class LoginPage extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
@@ -50,9 +52,12 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   String errorMessage = '';
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
+    AuthHelper.checkLoggedInUser(context, _auth);
+    
     Map<String, String> errorCodeMessages = {
       'invalid-email': 'Correo electrónico inválido',
       'user-disabled': 'Usuario deshabilitado',

@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tienda_mascotas/src/constantes/routes.dart';
+import 'package:tienda_mascotas/src/pages/login.dart';
 import 'package:tienda_mascotas/src/providers/carrito_provider.dart';
-import 'package:tienda_mascotas/src/test/auth_test.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
@@ -25,8 +26,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(useMaterial3: true),
-      home:  const AuthenticationScreen(),
-      initialRoute: MyRoutes.test.name,
+      home:   LoginPage(),
+      initialRoute: MyRoutes.login.name,
       routes: routes,
     );
     

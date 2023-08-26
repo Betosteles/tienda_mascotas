@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:tienda_mascotas/src/constantes/routes.dart';
 import 'package:tienda_mascotas/src/models/pedido_detalle.dart';
 import 'package:tienda_mascotas/src/providers/pedido_provider.dart';
 
 import '../models/pedido.dart';
 import '../providers/pedido_detalle_provider.dart';
 import '../providers/pedido_estado_provider.dart';
+import '../widgets/card_user_info.dart';
 import '../widgets/dropdown_button_estado_pedido.dart';
 import '../widgets/list_tile_pedido_detalle_producto.dart';
+import '../widgets/total_text.dart';
 
 class AdministrarPedidosPage extends StatelessWidget {
   const AdministrarPedidosPage({super.key });
@@ -63,6 +66,9 @@ Widget build(BuildContext context) {
                           },                                      
                                     ),
                       ),
+                      UserInfoCard(uid: args.clienteId,),
+                      TextTotal(pedidoid: args.idPedido,)
+                      ,
                       EstadoPedidoDropdown(
                       valorSeleccionadoController: valorSeleccionadoController2,
                       pedidoId: args.idPedido,
@@ -76,6 +82,7 @@ Widget build(BuildContext context) {
 
                         if(valor!=null){
                             pedidoEstadoProvider.actualizarEstadoPedido(args.idPedido, int.parse(valor), context);
+                            Navigator.pushNamed(context, MyRoutes.admin.name);
 
                         }
                         
