@@ -9,13 +9,13 @@ String productoToJson(List<Usuario> data) =>
       
 class Usuario {
 
-  final String correo;
-  final String nombreCompleto;
-  final String identidad;
-  final String telefono;
-  final String direccion;
-  final String referencia;
-  final String tipoUsuario;
+  String correo;
+  String nombreCompleto;
+  String identidad;
+  String telefono;
+  String direccion;
+  String referencia;
+  String tipoUsuario;
 
   Usuario({
 

@@ -110,36 +110,19 @@ Future<String> cambiarContrasena(String currentPassword, String newPassword) asy
 Future<String> modificarUsuario(Usuario nuevoUsuario) async {
     try {
       String uid = obtenerUIDUsuarioActivo() ?? '';
-      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('usuarios').doc(uid).get();
+     
+        await FirebaseFirestore.instance.collection('usuarios').doc(uid).update({
+          'correo': nuevoUsuario.correo,
+          'nombreCompleto': nuevoUsuario.nombreCompleto,
+          'identidad': nuevoUsuario.identidad,
+          'telefono': nuevoUsuario.telefono,
+          'direccion': nuevoUsuario.direccion,
+          'referencia': nuevoUsuario.referencia,
+          'tipoUsuario': nuevoUsuario.tipoUsuario, 
+        });
 
-      if (userSnapshot.exists) {
-        Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
-        Usuario usuarioActual = Usuario.fromJson(userData);
-
-        // Compara los campos y actualiza solo si hay cambios
-        if (nuevoUsuario.nombreCompleto != usuarioActual.nombreCompleto) {
-          userData['nombreCompleto'] = nuevoUsuario.nombreCompleto;
-        }
-        if (nuevoUsuario.identidad != usuarioActual.identidad) {
-          userData['identidad'] = nuevoUsuario.identidad;
-        }
-        if (nuevoUsuario.telefono != usuarioActual.telefono) {
-          userData['telefono'] = nuevoUsuario.telefono;
-        }
-        if (nuevoUsuario.direccion != usuarioActual.direccion) {
-          userData['direccion'] = nuevoUsuario.direccion;
-        }
-        if (nuevoUsuario.referencia != usuarioActual.referencia) {
-          userData['referencia'] = nuevoUsuario.referencia;
-        }
-
-        // Actualiza los cambios en la base de datos
-        await FirebaseFirestore.instance.collection('usuarios').doc(uid).update(userData);
-
-        return ('Usuario modificado exitosamente.');
-      } else {
-        return ('Usuario no encontrado en la base de datos.');
-      }
+        return ('Exito');
+  
     } catch (error) {
       return ('Error al modificar el usuario: $error');
     }

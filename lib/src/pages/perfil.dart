@@ -12,9 +12,9 @@ class PaginaPerfil extends StatelessWidget {
   Widget build(BuildContext context) {
     final usuarioProvide = UsuariosProvider();
 
-    return MaterialApp(
-      routes: routes,
-      home: FutureBuilder<Usuario?>(
+    return 
+      
+       FutureBuilder<Usuario?>(
         future: usuarioProvide
             .obtenerUsuarioActual(), // Llama a la función para obtener el usuario
         builder: (context, snapshot) {
@@ -124,8 +124,8 @@ class PaginaPerfil extends StatelessWidget {
               return const Text('Usuario no encontrado');
             }
           }
-        },
-      ),
-    );
+        });
+      
+    
   }
 }

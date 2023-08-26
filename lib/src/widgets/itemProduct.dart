@@ -48,6 +48,8 @@ Widget build(BuildContext context) {
             MyRoutes.detalleProducto.name,
             arguments: product,
           );
+
+          
         },
         child: Card(
           child: Column(
