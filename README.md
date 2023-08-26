@@ -1,12 +1,8 @@
 
+Listo Para Ejecutar!
 
-Versión de PHP Utilizada para el Proyecto: 8.2.4 
-
-Versión Sql Utilizada para el Proyecto 8.0.34
-
-
-La carpeta tienda y api se deben colocar dentro de la carpeta "C:\xampp\htdocs"
-
-Modificar el archivo "C:\xampp\htdocs\api\config\database.php" para modificar el usuario y contraseña en caso de ser necesario.
-
+Kevin Alberto Alva Castro #20192000180 -----
+Eder Yoel Amaya Rivas #20172001662 -----
+Jimmy Saul Oliva Ventura #20172031180 -----
+Angel Alberto Orellana Flores #20182001299 
 
