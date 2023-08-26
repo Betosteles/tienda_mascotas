@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +21,10 @@ class AuthHelper {
         String userType = userData['tipoUsuario'];
 
         if (userType == 'User') {
+          Navigator.pop(context);
           Navigator.pushNamed(context, MyRoutes.tiendaNav.name);
         } else if (userType == 'Admin') {
+          Navigator.pop(context);
           Navigator.pushNamed(context, MyRoutes.admin.name);
         } else {
           // Si el tipo de usuario no es reconocido, manejarlo de acuerdo a tus necesidades

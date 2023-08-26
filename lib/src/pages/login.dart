@@ -118,8 +118,12 @@ class _LoginFormState extends State<LoginForm> {
 
                     if (userType == 'User') {
                       // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                      // ignore: use_build_context_synchronously
                       Navigator.pushNamed(context, MyRoutes.tiendaNav.name);
                     } else if (userType == 'Admin') {
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
                       // ignore: use_build_context_synchronously
                       Navigator.pushNamed(context, MyRoutes.admin.name);
                     } else {
