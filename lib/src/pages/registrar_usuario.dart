@@ -77,13 +77,12 @@ class RegisterScreen extends StatelessWidget {
                       direccion.isEmpty ||
                       referencia.isEmpty) {
                     // Mostrar mensaje de error
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                            'Por favor, completa todos los campos correctamente.'),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
+                    SnackBarHelper.showSnackBar(context, 'Por favor, completa todos los campos correctamente.',SnackBarType.error);
+                   
+                        // content: Text(
+                        //     'Por favor, completa todos los campos correctamente.'),
+                        // duration: Duration(seconds: 2),
+                    
                     return; // Salir de la función si los campos no son válidos
                   }
 
@@ -112,14 +111,10 @@ class RegisterScreen extends StatelessWidget {
                         tipoUsuario: '',
                       ),
                     );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Se registró con éxito. ¡Bienvenido!'),
-                        duration: Duration(
-                            seconds:
-                                3), // Ajusta la duración según tus necesidades
-                      ),
-                    );
+                    SnackBarHelper.showSnackBar( context, 'Se registró con éxito. ¡Bienvenido!', SnackBarType.info);
+                   
+                      
+                    
 
 // Redirigir a la página de inicio de sesión
                     Future.delayed(const Duration(seconds: 3), () {
