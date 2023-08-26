@@ -106,7 +106,7 @@ class DetalleProducto extends StatelessWidget {
                                 amountControler.currentAmount =
                                     cantidad.currentAmount;
                                 refreshAmount();
-                                sleep(const Duration(milliseconds: 100));
+                                sleep(const Duration(milliseconds: 350));
                                 Navigator.pop(context);
                               });
                             } else if (cantidad.currentAmount == 0) {
