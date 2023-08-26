@@ -36,7 +36,7 @@ class ProductoProvider {
 
   Future<List<Producto>> getProducts() async {
     try {
-      final url = Uri.parse('http://10.0.2.2/api/Producto/?id=0');
+      final url = Uri.parse('http://140.84.182.78/api/Producto/?id=0');
 
       final response = await http.get(url);
       return productoFromJson(response.body);
@@ -47,7 +47,7 @@ class ProductoProvider {
 
   Future<Producto> getProducto(int id) async {
     try {
-      final url = Uri.parse('http://10.0.2.2/api/Producto/?id=$id');
+      final url = Uri.parse('http://140.84.182.78/api/Producto/?id=$id');
 
       final response = await http.get(url);
       final productoObjeto = productoFromJson(response.body);
@@ -63,7 +63,7 @@ class ProductoProvider {
     //AnimalId y CategoriaID
     try {
       final url = Uri.parse(
-          'http://10.0.2.2/api/Producto/?idA=$animalId&idC=$categoriaID');
+          'http://140.84.182.78/api/Producto/?idA=$animalId&idC=$categoriaID');
 
       final response = await http.get(url);
       return productoFromJson(response.body);

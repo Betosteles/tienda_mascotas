@@ -9,7 +9,7 @@ class PedidoEstadoProvide {
   Future<PedidoEstado> getPedidoEstado(int pedidoId) async {
     
     try {
-      final url = Uri.parse('http://10.0.2.2/api/PedidoEstado/?id=$pedidoId');
+      final url = Uri.parse('http://140.84.182.78/api/PedidoEstado/?id=$pedidoId');
       final response = await http.get(url);
       final body = pedidoEstadoFromJson(response.body);
 
@@ -28,7 +28,7 @@ class PedidoEstadoProvide {
 
   Future<void> actualizarEstadoPedido(int pedidoId, int nuevoEstadoId, contexto) async {
     try {
-      final url = Uri.parse('http://10.0.2.2/api/PedidoEstado/');
+      final url = Uri.parse('http://140.84.182.78/api/PedidoEstado/');
       final response = await http.put(
         url,
         headers: {"Content-Type": "application/json"},

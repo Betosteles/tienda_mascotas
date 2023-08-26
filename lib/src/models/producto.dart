@@ -43,7 +43,7 @@ class Producto {
         precio: json["precio"].toDouble(),
         stock: json["stock"],
         codigoBarra: json["codigo_barra"],
-        imagenes: "http://10.0.2.2/tienda/img/${json["imagenes"]}",
+        imagenes: "http://140.84.182.78/tienda/img/${json["imagenes"]}",
         garantia: json["garantia"],
       );
 

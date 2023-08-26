@@ -5,7 +5,7 @@ import '../models/metodo_pago_model.dart';
 
 
 class MetodoPagoProvider {
-  final url = Uri.parse('http://10.0.2.2/api/MetodoPago/');
+  final url = Uri.parse('http://140.84.182.78/api/MetodoPago/');
 
   Future<List<MetodoPago>> obtenerMetodosPago() async {
     final response = await http.get(Uri.parse('$url?id=0'));

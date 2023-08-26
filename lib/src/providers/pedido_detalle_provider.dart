@@ -7,7 +7,7 @@ import '../models/producto.dart';
 class PedidoDetalleProvider {
   Future<List<PedidoDetalle>> getPedidoDetalle(int idPedido) async {
     try {
-      final url = Uri.parse('http://10.0.2.2/api/PedidoDetalle/?id=$idPedido');
+      final url = Uri.parse('http://140.84.182.78/api/PedidoDetalle/?id=$idPedido');
       final response = await http.get(url);
       return pedidoDetalleFromJson(response.body);
     } catch (error) {

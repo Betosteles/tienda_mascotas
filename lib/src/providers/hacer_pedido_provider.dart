@@ -6,7 +6,7 @@ import 'carrito_provider.dart';
 
 
 class HacerPedido{
-  final String apiUrl = 'http://10.0.2.2/api';
+  final String apiUrl = 'http://140.84.182.78/api';
   final carritoProvider = CarritoService();
   final User? user = FirebaseAuth.instance.currentUser;
   
