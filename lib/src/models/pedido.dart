@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-
 List<Pedido> pedidoFromJson(String str) =>
     List<Pedido>.from(json.decode(str).map((x) => Pedido.fromJson(x)));
 
 String pedidoToJson(List<Pedido> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-      
+
 class Pedido {
   int idPedido;
   String fechaPedido;
@@ -38,6 +37,3 @@ class Pedido {
     };
   }
 }
-
-
-

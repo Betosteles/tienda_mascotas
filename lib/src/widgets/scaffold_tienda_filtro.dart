@@ -16,9 +16,7 @@ final categoriaProducto =
 Scaffold getScaffoldTiendaSinFiltrar(context, productProvider) {
   return Scaffold(
     appBar: AppBar(
-      title: Text('Tienda',
-          style: getEstiloTienda()
-          ),
+      title: Text('Tienda', style: getEstiloTienda()),
       backgroundColor: Colors.green[900],
       actions: [
         IconButton(
@@ -64,9 +62,7 @@ Scaffold getScaffoldTiendaSinFiltrar(context, productProvider) {
 Scaffold getScaffoldTiendaFiltrada(context, productProvider) {
   return Scaffold(
     appBar: AppBar(
-        title: Text('Tienda',
-            style: getEstiloTienda()
-            ),
+        title: Text('Tienda', style: getEstiloTienda()),
         backgroundColor: Colors.green[900],
         actions: [
           IconButton(

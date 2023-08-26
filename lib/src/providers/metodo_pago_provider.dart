@@ -2,8 +2,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/metodo_pago_model.dart';
 
-
-
 class MetodoPagoProvider {
   final url = Uri.parse('http://140.84.182.78/api/MetodoPago/');
 
@@ -18,7 +16,7 @@ class MetodoPagoProvider {
     }
   }
 
-   Future<MetodoPago> obtenerMetodoPagoPorId(int metodoPagoId) async {
+  Future<MetodoPago> obtenerMetodoPagoPorId(int metodoPagoId) async {
     final response = await http.get(Uri.parse('$url?id=$metodoPagoId'));
 
     if (response.statusCode == 200) {
@@ -28,7 +26,4 @@ class MetodoPagoProvider {
       throw Exception('Error al obtener el método de pago');
     }
   }
-
-
 }
-

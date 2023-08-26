@@ -10,8 +10,8 @@ class PedidoProvider {
   Future<List<Pedido>> getPedido() async {
     try {
       if (user != null) {
-        final url =
-            Uri.parse('http://140.84.182.78/api/Pedido/?cliente_id=${user!.uid}');
+        final url = Uri.parse(
+            'http://140.84.182.78/api/Pedido/?cliente_id=${user!.uid}');
         final response = await http.get(url);
         return pedidoFromJson(response.body);
       } else {
@@ -34,53 +34,47 @@ class PedidoProvider {
     }
   }
 
-  Future<int> totalPedidos() async{
-
+  Future<int> totalPedidos() async {
     try {
       final url = Uri.parse("http://140.84.182.78/api/Pedido/?total");
       final response = await http.get(url);
       return json.decode(response.body)['total'];
-      
     } catch (error) {
       throw Exception('$error');
     }
-
   }
-  Future<List<Pedido>> getPedidoAllDescLimitAndOffset(int limit, int offset) async {
 
+  Future<List<Pedido>> getPedidoAllDescLimitAndOffset(
+      int limit, int offset) async {
     try {
-      final url = Uri.parse("http://140.84.182.78/api/Pedido/?limit=$limit&offset=$offset");
+      final url = Uri.parse(
+          "http://140.84.182.78/api/Pedido/?limit=$limit&offset=$offset");
       final response = await http.get(url);
       return pedidoFromJson(response.body);
-      
     } catch (error) {
       throw Exception('$error');
     }
-
-    
-
   }
 
   Future<List<Pedido>> getPedidosPorCliente() async {
     try {
-      final url = Uri.parse('http://140.84.182.78/api/Pedido/?cliente_id=${user?.uid}');
+      final url =
+          Uri.parse('http://140.84.182.78/api/Pedido/?cliente_id=${user?.uid}');
       final response = await http.get(url);
       return pedidoFromJson(response.body);
     } catch (error) {
       throw Exception('$error');
     }
   }
-
 
   Future<List<Pedido>> getPedidosPorCliente2() async {
     try {
-      final url = Uri.parse('http://140.84.182.78/api/Pedido/?cliente_id=${user?.uid}&completado');
+      final url = Uri.parse(
+          'http://140.84.182.78/api/Pedido/?cliente_id=${user?.uid}&completado');
       final response = await http.get(url);
       return pedidoFromJson(response.body);
     } catch (error) {
       throw Exception('$error');
     }
   }
-
-
 }

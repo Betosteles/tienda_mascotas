@@ -1,13 +1,15 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tienda_mascotas/src/VariableControler/total_amount_cart.dart';
+import 'package:tienda_mascotas/src/constantes/tema.dart';
 
 import '../VariableControler/amount_product_controller.dart';
 import '../models/producto.dart';
 import '../providers/carrito_provider.dart';
 import '../widgets/snackbar_helper.dart';
-
 
 class DetalleProducto extends StatelessWidget {
   DetalleProducto({super.key});
@@ -19,12 +21,13 @@ class DetalleProducto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Producto;
-    final amountControler =  Get.find<AmountProductController>(tag: args.productoId.toString());
+    final amountControler =
+        Get.find<AmountProductController>(tag: args.productoId.toString());
 
     return FutureBuilder(
-      future: carritoProvider.obtenerCantidadProductoEnCarrito(args.productoId.toString()),
-      builder:(context, snapshot) {        
-
+      future: carritoProvider
+          .obtenerCantidadProductoEnCarrito(args.productoId.toString()),
+      builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
@@ -32,21 +35,10 @@ class DetalleProducto extends StatelessWidget {
         } else if (!snapshot.hasData) {
           return const Text('No hay datos disponibles');
         } else {
-
           cantidad.currentAmount = snapshot.data!;
 
-
           return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                args.nombre,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              backgroundColor: Colors.green[900],
-            ),
+            appBar: getAppBarStyle(args.nombre),
             body: Center(
               child: Column(
                 children: [
@@ -79,45 +71,64 @@ class DetalleProducto extends StatelessWidget {
                             IconButton(
                               icon: const Icon(Icons.remove),
                               onPressed: () {
-                                if (cantidad.currentAmount>0){
-                                    cantidad.currentAmount--;
+                                if (cantidad.currentAmount > 0) {
+                                  cantidad.currentAmount--;
                                 }
-                                
                               },
                             ),
-                            Obx(() => Text(cantidad.currentAmount.toString()))
-                            ,
+                            Obx(() => Text(cantidad.currentAmount.toString())),
                             IconButton(
                               icon: const Icon(Icons.add),
                               onPressed: () {
-                                if(cantidad.currentAmount<args.stock){
+                                if (cantidad.currentAmount < args.stock) {
                                   cantidad.currentAmount++;
                                 }
-                                
                               },
                             ),
                           ],
                         ),
                         ElevatedButton(
-                          onPressed: () async{
+                          onPressed: () async {
                             // Lógica para agregar al carrito
-                            if(cantidad.currentAmount!=0){
-                              await carritoProvider.agregarProductoAlCarrito(user!.uid, args.productoId, cantidad.currentAmount, args.precio).then((value){
-                                SnackBarHelper.showSnackBar(context, 'Producto Actualizado Correctamente', SnackBarType.info, duration: const Duration(seconds: 1));
-                                amountControler.currentAmount=cantidad.currentAmount;
+                            if (cantidad.currentAmount != 0) {
+                              await carritoProvider
+                                  .agregarProductoAlCarrito(
+                                      user!.uid,
+                                      args.productoId,
+                                      cantidad.currentAmount,
+                                      args.precio)
+                                  .then((value) {
+                                SnackBarHelper.showSnackBar(
+                                    context,
+                                    'Producto Actualizado Correctamente',
+                                    SnackBarType.info,
+                                    duration: const Duration(seconds: 1));
+                                amountControler.currentAmount =
+                                    cantidad.currentAmount;
                                 refreshAmount();
+                                sleep(const Duration(milliseconds: 100));
+                                Navigator.pop(context);
                               });
-                            }else if(cantidad.currentAmount==0){
-                              await carritoProvider.eliminarProductoDelCarrito(user!.uid, args.productoId.toString()).then((value){
-                                SnackBarHelper.showSnackBar(context, 'Producto Actualizado Correctamente', SnackBarType.info, duration: const Duration(seconds: 1));
-                                amountControler.currentAmount=cantidad.currentAmount;
+                            } else if (cantidad.currentAmount == 0) {
+                              await carritoProvider
+                                  .eliminarProductoDelCarrito(
+                                      user!.uid, args.productoId.toString())
+                                  .then((value) {
+                                SnackBarHelper.showSnackBar(
+                                    context,
+                                    'Producto Actualizado Correctamente',
+                                    SnackBarType.info,
+                                    duration: const Duration(seconds: 1));
+                                amountControler.currentAmount =
+                                    cantidad.currentAmount;
                                 refreshAmount();
                               });
                             }
-                            
                           },
-                          child: const Text('Añadir al carrito',
-                          style: TextStyle(fontSize: 12),),
+                          child: const Text(
+                            'Añadir al carrito',
+                            style: TextStyle(fontSize: 12),
+                          ),
                         ),
                       ],
                     ),

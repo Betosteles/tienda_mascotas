@@ -5,5 +5,6 @@ class CategoriaProductosController extends GetxController {
 
   //getters y setters
   int get currentProductosCategory => _currentProductosCategory.value;
-  set currentProductosCategory(int value) => _currentProductosCategory.value = value;
+  set currentProductosCategory(int value) =>
+      _currentProductosCategory.value = value;
 }

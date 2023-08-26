@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tienda_mascotas/src/constantes/routes.dart';
+import 'package:tienda_mascotas/src/constantes/tema.dart';
 import 'package:tienda_mascotas/src/models/usuario.dart';
 import 'package:tienda_mascotas/src/providers/usuarios_provider.dart';
 
@@ -12,9 +13,7 @@ class PaginaPerfil extends StatelessWidget {
   Widget build(BuildContext context) {
     final usuarioProvide = UsuariosProvider();
 
-    return 
-      
-       FutureBuilder<Usuario?>(
+    return FutureBuilder<Usuario?>(
         future: usuarioProvide
             .obtenerUsuarioActual(), // Llama a la función para obtener el usuario
         builder: (context, snapshot) {
@@ -26,12 +25,7 @@ class PaginaPerfil extends StatelessWidget {
             Usuario? usuario = snapshot.data;
             if (usuario != null) {
               return Scaffold(
-                appBar: AppBar(
-                  title: const Text("Perfil",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold)),
-                  backgroundColor: Colors.green[900],
-                ),
+                appBar: getAppBarStyle("Perfil"),
                 body: Center(
                   child: Container(
                     padding: const EdgeInsets.all(16),
@@ -85,18 +79,16 @@ class PaginaPerfil extends StatelessWidget {
                           title: "Pedidos Pendientes",
                           icon: Icons.local_shipping,
                           onPress: () {
-    
-                            Navigator.pushNamed(context, MyRoutes.pedidosPendientes.name);
-    
+                            Navigator.pushNamed(
+                                context, MyRoutes.pedidosPendientes.name);
                           },
                         ),
                         WidgetMenuPerfil(
                             title: "Pedidos Pasados",
                             icon: Icons.inventory,
                             onPress: () {
-    
-                              Navigator.pushNamed(context, MyRoutes.pedidosPasados.name);
-    
+                              Navigator.pushNamed(
+                                  context, MyRoutes.pedidosPasados.name);
                             }),
                         const Divider(
                           color: Colors.grey,
@@ -125,7 +117,5 @@ class PaginaPerfil extends StatelessWidget {
             }
           }
         });
-      
-    
   }
 }

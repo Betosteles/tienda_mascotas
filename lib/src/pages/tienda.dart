@@ -13,7 +13,8 @@ class NavTienda extends StatelessWidget {
   NavTienda({super.key});
 
   final tiendaController = Get.put<TiendaController>(TiendaController());
-  final totalCarrito = Get.put<TotalAmountProductController>(TotalAmountProductController());
+  final totalCarrito =
+      Get.put<TotalAmountProductController>(TotalAmountProductController());
   final carrito = CarritoService();
 
   @override
@@ -26,23 +27,15 @@ class NavTienda extends StatelessWidget {
         home: Scaffold(
             body: PageView(
               controller: pageController,
-              physics: const NeverScrollableScrollPhysics(), 
+              physics: const NeverScrollableScrollPhysics(),
               onPageChanged: (value) async {
-                
-                  tiendaController.currentIndex = value;
-                
+                tiendaController.currentIndex = value;
               },
-              children: const [
-                TiendaPage(),
-                PaginaPerfil(),
-                CarritoPage()
-              ],
+              children: const [TiendaPage(), PaginaPerfil(), CarritoPage()],
             ),
             bottomNavigationBar: Obx(
               () => BottomNavigationBar(
                 currentIndex: tiendaController.currentIndex,
-                 
-                
                 onTap: (index) async {
                   tiendaController.currentIndex = index;
 
@@ -50,7 +43,6 @@ class NavTienda extends StatelessWidget {
                     index,
                     duration: const Duration(milliseconds: 250),
                     curve: Curves.easeIn,
-                    
                   );
                 },
                 items: [
@@ -69,47 +61,35 @@ class NavTienda extends StatelessWidget {
                   //   label: 'carrito',
                   //   tooltip: 'carrito',
                   // ),
-                  
 
                   BottomNavigationBarItem(
-        icon: Stack(
-          children: [
-            const Icon(Icons.shopping_cart),
-            Positioned(
-              top: 0,
-              right: 0,
-              child: 
-                
-               
-                 Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        totalCarrito.currentTotalAmount.toString(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                    icon: Stack(
+                      children: [
+                        const Icon(Icons.shopping_cart),
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              totalCarrito.currentTotalAmount.toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    )
-                
-                
-              ,
-            ),
-          ],
-        ),
-        label: 'Carrito',
-        tooltip: 'Carrito',
-      ),
-                  
-
-
-
+                      ],
+                    ),
+                    label: 'Carrito',
+                    tooltip: 'Carrito',
+                  ),
                 ],
-                
               ),
             )));
   }

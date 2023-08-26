@@ -5,5 +5,6 @@ class CategoriaAnimalesController extends GetxController {
 
   //getters y setters
   int get currentAnimalesCategory => _currentAnimalesCategory.value;
-  set currentAnimalesCategory(int value) => _currentAnimalesCategory.value = value;
+  set currentAnimalesCategory(int value) =>
+      _currentAnimalesCategory.value = value;
 }

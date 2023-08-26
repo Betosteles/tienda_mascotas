@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:tienda_mascotas/src/constantes/routes.dart';
 
 class AuthHelper {
-  static Future<void> checkLoggedInUser(BuildContext context, FirebaseAuth auth) async {
+  static Future<void> checkLoggedInUser(
+      BuildContext context, FirebaseAuth auth) async {
     final user = auth.currentUser;
     if (user != null) {
       String uid = user.uid;

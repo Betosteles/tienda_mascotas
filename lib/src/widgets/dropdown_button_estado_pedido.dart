@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import '../providers/pedido_estado_provider.dart'; 
+import 'package:tienda_mascotas/src/widgets/snackbar_helper.dart';
+import '../providers/pedido_estado_provider.dart';
 
-enum EstadosDePedidos {
-  pendiente,
-  completado
-}
+enum EstadosDePedidos { pendiente, completado }
 
 class EstadoPedidoDropdown extends StatefulWidget {
   final ValueNotifier<String?> valorSeleccionadoController;
   final int pedidoId;
 
-  const EstadoPedidoDropdown({Key? key, required this.valorSeleccionadoController, required this.pedidoId})
+  const EstadoPedidoDropdown(
+      {Key? key,
+      required this.valorSeleccionadoController,
+      required this.pedidoId})
       : super(key: key);
 
   @override
@@ -19,7 +20,8 @@ class EstadoPedidoDropdown extends StatefulWidget {
 
 class EstadoPedidoDropdownState extends State<EstadoPedidoDropdown> {
   final estadoPedidoProvider = PedidoEstadoProvide();
-  EstadosDePedidos estadoPedidoEnum = EstadosDePedidos.pendiente; // Valor predeterminado
+  EstadosDePedidos estadoPedidoEnum =
+      EstadosDePedidos.pendiente; // Valor predeterminado
   List<int> pedidoEstados = [1, 2];
 
   @override
@@ -30,23 +32,27 @@ class EstadoPedidoDropdownState extends State<EstadoPedidoDropdown> {
 
   void obtenerEstado() async {
     try {
-      final estado = await estadoPedidoProvider.getPedidoEstado(widget.pedidoId);
+      final estado =
+          await estadoPedidoProvider.getPedidoEstado(widget.pedidoId);
 
       setState(() {
-        estadoPedidoEnum = estado.estadoId == 1 ? EstadosDePedidos.pendiente : EstadosDePedidos.completado;
+        estadoPedidoEnum = estado.estadoId == 1
+            ? EstadosDePedidos.pendiente
+            : EstadosDePedidos.completado;
         widget.valorSeleccionadoController.value = estado.estadoId.toString();
       });
     } catch (error) {
-      print('Error al obtener estado del pedido: $error');
+      SnackBarHelper.showSnackBar(
+          context, error.toString(), SnackBarType.error);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    String estadoTexto = estadoPedidoEnum == EstadosDePedidos.pendiente ? "Pendiente" : "Completado";
+    //String estadoTexto = estadoPedidoEnum == EstadosDePedidos.pendiente ? "Pendiente" : "Completado";
 
     return DropdownButton<String>(
-      value: widget.valorSeleccionadoController.value, 
+      value: widget.valorSeleccionadoController.value,
       hint: const Text('Seleccione un estado de pedido'),
       items: pedidoEstados.map((int estado) {
         return DropdownMenuItem<String>(
@@ -57,7 +63,9 @@ class EstadoPedidoDropdownState extends State<EstadoPedidoDropdown> {
       onChanged: (String? newValue) {
         setState(() {
           widget.valorSeleccionadoController.value = newValue;
-          estadoPedidoEnum = newValue == "1" ? EstadosDePedidos.pendiente : EstadosDePedidos.completado;
+          estadoPedidoEnum = newValue == "1"
+              ? EstadosDePedidos.pendiente
+              : EstadosDePedidos.completado;
         });
       },
     );

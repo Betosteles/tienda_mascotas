@@ -6,7 +6,8 @@ import '../models/pedido.dart';
 import '../providers/pedido_detalle_provider.dart';
 
 class ListTilePedidoDetalleUsuario extends StatelessWidget {
-  ListTilePedidoDetalleUsuario({super.key, required this.pedidoDetalle, required this.pedidoEstado});
+  ListTilePedidoDetalleUsuario(
+      {super.key, required this.pedidoDetalle, required this.pedidoEstado});
 
   final Pedido pedidoDetalle;
   final PedidoEstado pedidoEstado;
@@ -27,26 +28,22 @@ class ListTilePedidoDetalleUsuario extends StatelessWidget {
           if (productoDetalle != null) {
             return GestureDetector(
               onTap: () {
-                
-                    
-                         Navigator.pushNamed(
-                        context,
-                        MyRoutes.clientePedidos.name,
-                        arguments: pedidoDetalle,
-                      );
-
-
-                
+                Navigator.pushNamed(
+                  context,
+                  MyRoutes.clientePedidos.name,
+                  arguments: pedidoDetalle,
+                );
               },
               child: ListTile(
-                title: Text('Fecha del Pedido: ${pedidoDetalle.fechaPedido.toString()}'),
-                subtitle: Text("Total: ${productoDetalle.toString()}"),
-                trailing: Text("id:${pedidoDetalle.idPedido.toString()}")
-            
-              ),
+                  shape: BeveledRectangleBorder(
+                    side: const BorderSide(width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  title: Text(
+                      'Fecha del Pedido: ${pedidoDetalle.fechaPedido.toString()}'),
+                  subtitle: Text("Total: ${productoDetalle.toString()}"),
+                  trailing: Text("id:${pedidoDetalle.idPedido.toString()}")),
             );
-
-          
 
             //return ListTilePedidoDetalleEstado(pedidoDetalle: pedidoDetalle,productoDetalle: snapshot.data,);
           } else {

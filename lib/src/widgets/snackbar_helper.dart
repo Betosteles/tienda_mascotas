@@ -6,7 +6,9 @@ enum SnackBarType {
 }
 
 class SnackBarHelper {
-  static void showSnackBar(BuildContext context, String message, SnackBarType type, {Duration duration = const Duration(seconds: 2)}) {
+  static void showSnackBar(
+      BuildContext context, String message, SnackBarType type,
+      {Duration duration = const Duration(seconds: 2)}) {
     Color backgroundColor;
     switch (type) {
       case SnackBarType.info:

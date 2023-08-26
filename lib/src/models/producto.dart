@@ -17,7 +17,7 @@ class Producto {
   final int stock;
   final String codigoBarra;
   final String imagenes;
-  final int garantia; 
+  final int garantia;
 
   Producto({
     required this.productoId,
@@ -34,7 +34,7 @@ class Producto {
   });
 
   factory Producto.fromJson(Map<String, dynamic> json) => Producto(
-        productoId: json["producto_id"], 
+        productoId: json["producto_id"],
         categoriaAnimalId: json["categoria_animal_id"],
         categoriaProductoId: json["categoria_producto_id"],
         nombre: json["nombre"],
@@ -61,4 +61,3 @@ class Producto {
         "garantia": garantia,
       };
 }
-

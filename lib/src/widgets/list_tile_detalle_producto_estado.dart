@@ -6,18 +6,16 @@ import 'package:tienda_mascotas/src/providers/pedido_estado_provider.dart';
 
 import 'list_tile_pedido_detalle_final.dart';
 
-
 class ListTilePedidoDetalleEstado extends StatelessWidget {
-  ListTilePedidoDetalleEstado({super.key, required this.pedidoDetalle, required this.productoDetalle});
+  ListTilePedidoDetalleEstado(
+      {super.key, required this.pedidoDetalle, required this.productoDetalle});
 
   final PedidoDetalle pedidoDetalle;
   final Producto productoDetalle;
   final pedidoEstadoProvider = PedidoEstadoProvide();
 
-
   @override
   Widget build(BuildContext context) {
- 
     return FutureBuilder<PedidoEstado>(
       future: pedidoEstadoProvider.getPedidoEstado(pedidoDetalle.idPedido),
       builder: (BuildContext context, AsyncSnapshot<PedidoEstado> snapshot) {
@@ -26,15 +24,16 @@ class ListTilePedidoDetalleEstado extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-
           final pedidoEstado = snapshot.data;
 
           if (pedidoEstado != null) {
-          return ListTilePedidoDetalleFinal(pedidoDetalle: pedidoDetalle,productoDetalle: productoDetalle, pedidoEstado: pedidoEstado);
-          }else{
+            return ListTilePedidoDetalleFinal(
+                pedidoDetalle: pedidoDetalle,
+                productoDetalle: productoDetalle,
+                pedidoEstado: pedidoEstado);
+          } else {
             return const Text('');
           }
-
         }
       },
     );

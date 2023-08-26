@@ -14,20 +14,19 @@ class PerfilCambios extends StatelessWidget {
     final usuarioProvide = UsuariosProvider();
 
     // Controladores para los TextFields
-    TextEditingController nombreController = TextEditingController(text: args.nombreCompleto);
-    TextEditingController identidadController = TextEditingController(text: args.identidad);
-    TextEditingController numeroController = TextEditingController(text: args.telefono);
-    TextEditingController direccionController = TextEditingController(text: args.direccion);
-    TextEditingController referenciaController = TextEditingController(text: args.referencia);
+    TextEditingController nombreController =
+        TextEditingController(text: args.nombreCompleto);
+    TextEditingController identidadController =
+        TextEditingController(text: args.identidad);
+    TextEditingController numeroController =
+        TextEditingController(text: args.telefono);
+    TextEditingController direccionController =
+        TextEditingController(text: args.direccion);
+    TextEditingController referenciaController =
+        TextEditingController(text: args.referencia);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Editar Usuario',
-          style: getEstiloTienda(),
-        ),
-        backgroundColor: Colors.green[900],
-      ),
+      appBar: getAppBarStyle('Editar Usuario'),
       body: Container(
         padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
         child: ListView(
@@ -43,14 +42,10 @@ class PerfilCambios extends StatelessWidget {
               controller: nombreController,
               decoration: const InputDecoration(
                 labelText: 'Nombre completo',
-                
               ),
-              onChanged:(value) {
-
+              onChanged: (value) {
                 args.nombreCompleto = nombreController.text;
-                
               },
-              
             ),
             // Resto de los TextFields
             TextField(
@@ -89,17 +84,13 @@ class PerfilCambios extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-
-                    
-
                     await usuarioProvide.modificarUsuario(args).then((value) {
                       if (value == "Exito") {
-                      SnackBarHelper.showSnackBar(context, "Cambios Realizados con Exito", SnackBarType.info);
-                      Navigator.pushNamed(context, MyRoutes.tiendaNav.name);
-                    }
+                        SnackBarHelper.showSnackBar(context,
+                            "Cambios Realizados con Exito", SnackBarType.info);
+                        Navigator.pushNamed(context, MyRoutes.tiendaNav.name);
+                      }
                     });
-
-                    
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,

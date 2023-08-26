@@ -57,7 +57,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     AuthHelper.checkLoggedInUser(context, _auth);
-    
+
     Map<String, String> errorCodeMessages = {
       'invalid-email': 'Correo electrónico inválido',
       'user-disabled': 'Usuario deshabilitado',
@@ -153,7 +153,6 @@ class _LoginFormState extends State<LoginForm> {
             },
             child: const Text('Registrarme'),
           ),
-          
         ],
       ),
     );

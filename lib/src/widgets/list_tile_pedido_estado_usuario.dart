@@ -24,8 +24,8 @@ class ListTilePedidoEstadoUsuario extends StatelessWidget {
           final productoEstado = snapshot.data;
 
           if (productoEstado != null) {
-            return  ListTilePedidoDetalleUsuario(pedidoDetalle: pedidoDetalle,pedidoEstado: productoEstado);
-            
+            return ListTilePedidoDetalleUsuario(
+                pedidoDetalle: pedidoDetalle, pedidoEstado: productoEstado);
 
             //return ListTilePedidoDetalleEstado(pedidoDetalle: pedidoDetalle,productoDetalle: snapshot.data,);
           } else {

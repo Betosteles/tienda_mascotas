@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class WidgetMenuPerfil extends StatelessWidget {
   const WidgetMenuPerfil({
     Key? key,

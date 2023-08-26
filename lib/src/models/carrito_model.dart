@@ -25,5 +25,4 @@ class Carrito {
       (key, value) => MapEntry(key.toString(), value),
     ));
   }
-
 }
