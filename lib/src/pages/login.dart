@@ -149,10 +149,7 @@ class _LoginFormState extends State<LoginForm> {
             },
             child: const Text('Registrarme'),
           ),
-          Text(
-            errorMessage,
-            style: const TextStyle(color: Colors.red),
-          ),
+          
         ],
       ),
     );

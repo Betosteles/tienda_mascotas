@@ -26,6 +26,7 @@ class PerfilCambios extends StatelessWidget {
           'Editar Usuario',
           style: getEstiloTienda(),
         ),
+        backgroundColor: Colors.green[900],
       ),
       body: Container(
         padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
