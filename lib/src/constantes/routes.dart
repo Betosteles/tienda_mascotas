@@ -15,7 +15,6 @@ import '../pages/tienda.dart';
 import '../pages/tienda_categoria_animales_page.dart';
 import '../pages/tienda_categoria_producto.dart';
 
-
 enum MyRoutes {
   login,
   admin,
@@ -48,8 +47,7 @@ final routes = {
   MyRoutes.perfil.name: (context) => const PaginaPerfil(),
   MyRoutes.perfilCambios.name: (context) => const PerfilCambios(),
   MyRoutes.registrarUser.name: (context) => RegisterScreen(),
-  MyRoutes.pedidosPendientes.name: (context) =>
-      const VerPedidosPendientesPage(),
+  MyRoutes.pedidosPendientes.name: (context) =>const VerPedidosPendientesPage(),
   MyRoutes.pedidosPasados.name: (context) => const VerPedidosPasadosPage(),
   MyRoutes.clientePedidos.name: (context) => const ClientesPedidosDetallePage(),
 };
