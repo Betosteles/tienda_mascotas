@@ -24,6 +24,7 @@ class VerPedidosPage extends StatelessWidget {
               icon: const Icon(Icons.exit_to_app),
               onPressed: () {
                 usuarioProvide.cerrarSesion();
+                Navigator.pop(context);
                 Navigator.pushNamed(context, MyRoutes.login.name);
               },
             ),

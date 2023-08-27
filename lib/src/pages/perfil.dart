@@ -103,6 +103,7 @@ class PaginaPerfil extends StatelessWidget {
                                 endIcon: false,
                                 onPress: () {
                                   usuarioProvide.cerrarSesion();
+                                  Navigator.pop(context);
                                   Navigator.pushNamed(
                                       context, MyRoutes.login.name);
                                   //navegacion al login
