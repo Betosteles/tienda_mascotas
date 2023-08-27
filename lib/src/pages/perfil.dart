@@ -18,7 +18,7 @@ class PaginaPerfil extends StatelessWidget {
             .obtenerUsuarioActual(), // Llama a la función para obtener el usuario
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator(); // Muestra un indicador de carga mientras se obtiene el usuario
+            return const Center(child: CircularProgressIndicator()); // Muestra un indicador de carga mientras se obtiene el usuario
           } else if (snapshot.hasError) {
             return const Text('Error al obtener el usuario');
           } else {

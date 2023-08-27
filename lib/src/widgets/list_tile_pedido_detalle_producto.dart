@@ -17,7 +17,7 @@ class ListTilePedidoDetalleProducto extends StatelessWidget {
       future: productoProvider.getProducto(pedidoDetalle.productoId),
       builder: (BuildContext context, AsyncSnapshot<Producto> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {

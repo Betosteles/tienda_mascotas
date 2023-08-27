@@ -27,7 +27,7 @@ class ItemProduct extends StatelessWidget {
           .obtenerCantidadProductoEnCarrito(product.productoId.toString()),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (snapshot.hasError) {

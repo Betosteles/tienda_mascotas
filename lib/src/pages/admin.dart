@@ -34,7 +34,7 @@ class VerPedidosPage extends StatelessWidget {
           future: pedidoProvider.getPedidosDesc(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(); // Muestra un indicador de carga mientras se obtienen los datos
+              return const Center(child: CircularProgressIndicator()); // Muestra un indicador de carga mientras se obtienen los datos
             } else if (snapshot.hasError) {
               return const Text(
                   'Error al cargar los pedidos'); // Muestra un mensaje de error si hay un problema

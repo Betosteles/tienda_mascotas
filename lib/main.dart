@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         future: getInicio(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator(); // Mostrar un indicador de carga mientras esperamos
+            return const Center(child: CircularProgressIndicator()); // Mostrar un indicador de carga mientras esperamos
           } else if (snapshot.hasData) {
             final inicio = snapshot.data!;
             return getInicioRuta(inicio);
